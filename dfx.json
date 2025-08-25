@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "canisters": {
+    "bbl_backend": {
+      "type": "rust",
+      "package": "bbl_backend",
+      "candid": "backend/bbl_backend/bbl_backend.did"
+    },
+    "bitcoin_integration": {
+      "type": "rust", 
+      "package": "bitcoin_integration",
+      "candid": "backend/bitcoin_integration/bitcoin_integration.did"
+    },
+    "internet_identity": {
+      "type": "pull",
+      "id": "uxrrr-q7777-77774-qaaaq-cai"
+    },
+    "frontend": {
+      "type": "assets",
+      "source": ["frontend/dist"]
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": ["https://ic0.app"],
+      "type": "persistent"
+    }
+  }
+}

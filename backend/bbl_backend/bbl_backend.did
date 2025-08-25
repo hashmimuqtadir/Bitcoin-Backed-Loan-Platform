@@ -1,0 +1,64 @@
+type LoanStatus = variant {
+  Active;
+  Repaid;
+  Liquidated;
+  Defaulted;
+};
+
+type Loan = record {
+  id: nat64;
+  borrower: principal;
+  collateral_amount: nat64;
+  loan_amount: nat64;
+  interest_rate: float64;
+  created_at: nat64;
+  due_date: nat64;
+  status: LoanStatus;
+  ltv_ratio: float64;
+};
+
+type UserProfile = record {
+  user_principal: principal;
+  total_collateral: nat64;
+  active_loans: vec nat64;
+  credit_score: nat32;
+  created_at: nat64;
+};
+
+type LoanRequest = record {
+  collateral_amount: nat64;
+  requested_amount: nat64;
+  loan_duration_days: nat32;
+};
+
+type MarketData = record {
+  btc_price_usd: float64;
+  last_updated: nat64;
+};
+
+type Result = variant {
+  Ok: Loan;
+  Err: text;
+};
+
+type Result_1 = variant {
+  Ok: UserProfile;
+  Err: text;
+};
+
+type Result_2 = variant {
+  Ok: text;
+  Err: text;
+};
+
+service : {
+  calculate_max_loan: (nat64) -> (nat64) query;
+  create_user_profile: () -> (Result_1);
+  get_btc_price: () -> (MarketData) query;
+  get_loan: (nat64) -> (opt Loan) query;
+  get_user_loans: (principal) -> (vec Loan) query;
+  get_user_profile: (principal) -> (opt UserProfile) query;
+  repay_loan: (nat64) -> (Result_2);
+  request_loan: (LoanRequest) -> (Result);
+  update_btc_price: (float64) -> (Result_2);
+}

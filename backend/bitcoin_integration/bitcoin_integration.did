@@ -1,0 +1,20 @@
+type BitcoinAddress = record {
+  address: text;
+  network: text;
+};
+
+type BitcoinBalance = record {
+  address: text;
+  balance_satoshis: nat64;
+};
+
+type Result = variant {
+  Ok: bool;
+  Err: text;
+};
+
+service : {
+  get_bitcoin_address: () -> (BitcoinAddress) query;
+  get_bitcoin_balance: (text) -> (BitcoinBalance) query;
+  verify_bitcoin_transaction: (text) -> (Result);
+}
